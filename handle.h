@@ -100,9 +100,9 @@ Key Words:
     break continue breakall
     import from as functions variables consts classes everything
 */
-const std::string PUBLIC="public", PRIVATE="private", INTERNAL="internal", IF="if", ELSE="else", ELIF="elif", FUNC="func", CLASS="class", FOR="for", WHILE="while", BREAK="break", CONTINUE="continue", BREAKALL="breakall", IMPORT="import", FROM="from", AS="as", FUNCTIONS="functions", VARIABLES="variables", CONSTS="consts", CLASSES="classes", EVERYTHING="everything";
+const std::string PUBLIC="public", PRIVATE="private", INTERNAL="internal", IF="if", ELSE="else", ELIF="elif", FUNC="func", CLASS="class", FOR="for", WHILE="while", BREAK="break", CONTINUE="continue", BREAKALL="breakall", IMPORT="import", FROM="from", AS="as", FUNCTIONS="functions", VARIABLES="variables", CONSTS="consts", CLASSES="classes", EVERYTHING="everything", BY="by";
 
-const std::vector<std::string> KEY_WORDS = {PUBLIC, PRIVATE, INTERNAL, IF, ELSE, ELIF, FUNC, CLASS, FOR, WHILE, BREAK, CONTINUE, BREAKALL, IMPORT, FROM, AS, FUNCTIONS, VARIABLES, CONSTS, CLASSES, EVERYTHING};
+const std::vector<std::string> KEY_WORDS = {PUBLIC, PRIVATE, INTERNAL, IF, ELSE, ELIF, FUNC, CLASS, FOR, WHILE, BREAK, CONTINUE, BREAKALL, IMPORT, FROM, AS, FUNCTIONS, VARIABLES, CONSTS, CLASSES, EVERYTHING, BY};
 
 const std::vector<std::string> SCOPES = {PUBLIC, PRIVATE, INTERNAL};
 const std::vector<std::string> JUDGES = {IF, ELSE, ELIF};

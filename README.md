@@ -15,16 +15,9 @@ import functions {get, post, } from requests; # functions 等是fiffle在import�
 
 func test(a, b) {
     """
-    方法的定义可以不声明返回值，默认为 auto||void
+    方法的定义可以不声明返回值，默认为 auto|void
     """
     print(a+b);
-}
-
-func int add(a, b) {
-    """
-    当然也可以声明带类型的方法，如果返回的非int会报错
-    """
-    return a+b;
 }
 
 func main() { 
@@ -35,3 +28,4 @@ func main() {
     print(add(1, 2));
 }
 ```
+请注意，Fiffle是一个半动态语言，因此虽然变量有特定类型，但是声明方法时字面声明的返回类型与实际类型可以不相符。

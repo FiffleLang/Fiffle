@@ -2,7 +2,7 @@
 using namespace std;
 
 int main() {
-	cout << ("*"=="*") << endl;
+	cout << (true==1) << endl;
 
 	return 0;
 }

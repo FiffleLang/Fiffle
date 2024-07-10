@@ -15,16 +15,9 @@ import functions {get, post, } from requests; # `functions` are keywords from fi
 
 func test(a, b) {
     """
-    defination of functions can be without types, the default types will be set to auto||void.
+    defination of functions can be without types, the default types will be set to auto|void.
     """
     print(a+b);
-}
-
-func int add(a, b) {
-    """
-    of course you can define it using special types like int (in fiffle, default-types are built-ins, not keywords)
-    """
-    return a+b;
 }
 
 func main() { 
