@@ -1,8 +1,8 @@
 # Fiffle
 
-Attention, documents of `Fiffle` only has <a href="https://FiffleLang/Fiffle/docs/english.md">English</a> and <a href="https://FiffleLang/Fiffle/README.md">中文</a>versions written or translated by fiffle.org, while other documents are translated automatically or by the developers' community. If there exists differences between official documents and others, the official ones first. If there are semantic differences between English and Chinese documents, please submit an Issue for the official to handle. The default format is Chinese documents.
+Attention, documents of `Fiffle` only has <a href="https://github.com/FiffleLang/Fiffle/docs/english.md">English</a> and <a href="https://github.com/FiffleLang/Fiffle/README.md">中文</a>versions written or translated by fiffle.org, while other documents are translated automatically or by the developers' community. If there exists differences between official documents and others, the official ones first. If there are semantic differences between English and Chinese documents, please submit an Issue for the official to handle. The default format is Chinese documents.
 
-<a href="https://FiffleLang/Fiffle/docs/english.md">English(Now)</a> <a href="https://FiffleLang/Fiffle/README.md">中文</a>
+<a href="https://github.com/FiffleLang/Fiffle/docs/english.md">English(Now)</a> <a href="https://github.com/FiffleLang/Fiffle/README.md">中文</a>
 
 Fiffle is a high-performance data processing language. Its design purpose is to process large amounts of data faster and better, without writing complex and confusing scripts like C++, and its running speed is better than Python. It has high readability and moderate running speed.
 
