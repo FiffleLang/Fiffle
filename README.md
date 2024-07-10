@@ -1,6 +1,8 @@
 # Fiffle
 
-<a>English</a> <a>中文（当前）</a>
+请注意，本文档只有<a href="https://FiffleLang/Fiffle/docs/english.md">English</a>和<a href="https://FiffleLang/Fiffle/README.md">中文</a>两个官方人工翻译文档，其他文档为自动翻译或社区翻译，如有勘误，请以官方文档为准。如果英语和中文文档出现语义差别，请提交Issue让官方来处理。默认以中文文档为主。
+
+<a href="https://FiffleLang/Fiffle/docs/english.md">English</a> <a href="https://FiffleLang/Fiffle/README.md">中文（当前）</a>
 
 Fiffle 是一个高性能的数据处理语言。它的设计用途是更快、更好地处理大量数据，而无需像`C++`那样编写大量复杂且难以理解的脚本，运行速度则优于`Python`。其具有高可读性和中等运行速度。
 
