@@ -29,3 +29,8 @@ func main() {
 }
 ```
 请注意，Fiffle是一个半动态语言，因此虽然变量有特定类型，但是声明方法时字面声明的返回类型与实际类型可以不相符。
+
+
+---
+### 贡献者
+Alex（创始人、主要开发者）：<a href="https://github.com/ZYpS-leader">@github</a> <a href="https://gitee.com/alex-omega">@gitee</a> <a href="https://www.zhihu.com/people/78-79-65-17">@知乎</a>
