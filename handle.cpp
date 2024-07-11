@@ -377,7 +377,7 @@ Params:
 6、条件分支
     1、判断变量
         比如 
-        if not a {
+        if (not a) {
             doSome();
         }
 
