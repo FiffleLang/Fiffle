@@ -39,6 +39,12 @@ echo 欢迎使用 ITea 编译器配套编译命令行；输入help获取帮助=^
                 echo | set /p="编译 %input:~4,100%.cpp -> %input:~4,100%.o ...  "
                 echo OK
                 g++ -c %input:~4,100%.cpp -o %input:~4,100%.o            
+            ) else (
+                if "%input:~0,2%"=="co" (
+                    echo | set /p="编译 %input:~3,100%.cpp -> %input:~3,100%.o ...  "
+                    g++ -c %input:~3,100%.cpp -o %input:~3,100%.o 
+                    echo OK
+                )
             )
         )
         

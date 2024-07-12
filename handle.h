@@ -1,10 +1,9 @@
-#include <string>
-#include <iostream>
-#include <vector>
 #include <cmath>
 #include <chrono>
 #include <stack>
 #include <map>
+
+#include "handled.h"
 
 class Node {
 public:
@@ -30,7 +29,7 @@ public:
 std::vector<std::string> split(std::string string, std::string delimeter = " ", int start = 0, int end = -1);
 std::vector<std::string> split_and_keep(std::string string, char delimeter, int start = 0, int end = -1);
 
-std::vector<std::string> handle_one_line(std::string newline);
+
 
 template <typename T, typename K>
 bool isin(T element, K list);
