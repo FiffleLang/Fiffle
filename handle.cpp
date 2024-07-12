@@ -1,13 +1,15 @@
 #include "handle.h"
 #include "imath.h"
 
-class SyntaxError {
+class SyntaxError
+{
     public:
-        SyntaxError(const std::string& error_msg) : 
-        _error_msg(error_msg) {}
-    virtual std::string what() const {
-        return "SyntaxError: " + _error_msg ;
+    SyntaxError(const std::string &error_msg) : _error_msg(error_msg) {}
+    virtual std::string what() const
+    {
+        return "SyntaxError: " + _error_msg;
     }
+
     protected:
         std::string _error_msg;
 };
@@ -48,7 +50,7 @@ std::vector<std::string> split(std::string string, std::string delimeter, int st
         return split(string, " ");
     } else {
         std::vector<std::string> tokens;
-        size_t pos = 0;
+        ssize_t pos = 0;
 
         while ((pos = string.find(delimeter)) != std::string::npos) {
             tokens.push_back(string.substr(0, pos));
@@ -107,99 +109,83 @@ int main() {
 }
 */
 
-
 /*
 Return if the element in the list.
 
 Params:
-    element(int, string, char)
-    list(vector<int>, vector<string>, vector<char>, string)
+template <typename T,typename K>
+    element(T)
+    list(K) // Iterative types
 */
-bool isin(int element, std::vector<int> list) {
-    for(int l:list) {
-        if(l==element) {
+template <typename T, typename K>
+bool isin(T element, K list)
+{
+    for (auto l : list)
+    {
+        if (l == element)
+        {
             return true;
         }
-    };
+    }
     return false;
 }
-bool isin(std::string element, std::vector<std::string> list) {
-    for(std::string l:list) {
-        if(l==element) {
-            return true;
-        }
-    };
-    return false;
-}
-bool isin(char element, std::vector<char> list) {
-    for(char l:list) {
-        if(l==element) {
-            return true;
-        }
-    };
-    return false;
-}
-bool isin(char element, std::string list) {
-    for(char l:list) {
-        if(l==element) {
-            return true;
-        }
-    };
-    return false;
-}
-
 
 /*
 Check if a variable name is legal.
 */
-char islegal(std::string name) {
-    for(char i:name) {
-        if(isin(i, ILEGAL_CHARS)) {
+char islegal(std::string name)
+{
+    for (char i : name)
+    {
+        if (isin(i, ILEGAL_CHARS))
+        {
             return i;
         }
     }
     return ' ';
 }
 
-
-
-void print(std::string message) {
+void print(std::string message)
+{
     std::cout << message << std::endl;
 }
-void print(std::string message, bool iferror) {
-    if(iferror) {
+void print(std::string message, bool iferror)
+{
+    if (iferror)
+    {
         std::cerr << message << std::endl;
     }
 }
 
-
-
-
 // Calculate static
-std::map<char, int> out = { {'#', 0}, {'(', 8}, {'^', 6}, {'*', 4}, {'/', 4}, {'%', 4},{'+', 2}, {'-', 2},{')', 1} };
-std::map<char, int> inside = { {'#', 0}, {'(', 1}, {'^', 7}, {'*', 5}, {'/', 5}, {'%', 5}, {'+', 3},{'-', 3},{')', 8} };
-
-
+std::map<char, int> out = {{'#', 0}, {'(', 8}, {'^', 6}, {'*', 4}, {'/', 4}, {'%', 4}, {'+', 2}, {'-', 2}, {')', 1}};
+std::map<char, int> inside = {{'#', 0}, {'(', 1}, {'^', 7}, {'*', 5}, {'/', 5}, {'%', 5}, {'+', 3}, {'-', 3}, {')', 8}};
 
 // 中缀表达式->后缀表达式
-std::vector<Node> midToBack(std::string mid) {
+std::vector<Node> midToBack(std::string mid)
+{
 	std::vector<Node> back;
-	if (mid.size() == 0) return back;
+    if (mid.size() == 0)
+        return back;
 	// 去空格
 	std::string s;
-	for (char c : mid) { 
+    for (char c : mid)
+    {
 		if (c != ' ')
 			s.push_back(c);
 	}
 
 	// 处理负数
-	if (s[0] == '-') {
+    if (s[0] == '-')
+    {
 		s.insert(0, "0");
 	}
-    if (s[0] == '+') {
+    if (s[0] == '+')
+    {
 		s.insert(0, "0");
 	}
-	for (int i = 0; i < s.size() - 1; i++) {
+    for (int i = 0; i < s.size() - 1; i++)
+    {
 		if (s[i] == '(' && s[i + 1] == '-')
 			s.insert(i + 1, "0");
 	}
@@ -207,50 +193,63 @@ std::vector<Node> midToBack(std::string mid) {
 
 	std::stack<char> op;
 	op.push('#');
-	bool flag = false; //记录上次存入的是否为数字
-	for (int i = 0; i < mid.size(); i++) {
-		if (mid[i] >= '0' && mid[i] <= '9') { // 操作数不进栈
-			if (flag == false) {
+    bool flag = false; // 记录上次存入的是否为数字
+    for (int i = 0; i < mid.size(); i++)
+    {
+        if (mid[i] >= '0' && mid[i] <= '9')
+        { // 操作数不进栈
+            if (flag == false)
+            {
 				flag = true;
 				int tmp = mid[i] - '0';
-				back.push_back(Node(tmp, false));
+                back.push_back(Node(tmp));
 			}
-			else {
+            else
+            {
 				back.back().num *= 10;
 				back.back().num += mid[i] - '0';
 			}
 		}
-		else if (out[mid[i]] > inside[op.top()]) { // 操作符比栈顶操作符优先级高，则进栈
+        else if (out[mid[i]] > inside[op.top()])
+        { // 操作符比栈顶操作符优先级高，则进栈
 			flag = false;
 			op.push(mid[i]);
 		}
-		else if (out[mid[i]] < inside[op.top()]) { // 操作符比栈顶操作符优先级低，则栈顶操作符出栈
+        else if (out[mid[i]] < inside[op.top()])
+        { // 操作符比栈顶操作符优先级低，则栈顶操作符出栈
 			flag = false;
-			back.push_back(Node(op.top(), true));
+            back.push_back(Node(op.top()));
 			op.pop();
 			i--;
 		}
-		else { // 操作符与栈顶操作符优先级相同，则匹配括号
+        else
+        { // 操作符与栈顶操作符优先级相同，则匹配括号
 			flag = false;
 			op.pop();
 		}
 	}
-	while (op.top() != '#') {
-		back.push_back(Node(op.top(), true));
+    while (op.top() != '#')
+    {
+        back.push_back(Node(op.top()));
 		op.pop();
 	}
 	return back;
 }
 
 // 求解后缀表达式
-double getValue(std::vector<Node> back) {
-	if (back.size() == 0) return 0;
+double getValue(std::vector<Node> back)
+{
+    if (back.size() == 0)
+        return 0;
 	std::stack<double> nums;
-	for (auto e : back) {
-		if (!e.isop) {
+    for (auto e : back)
+    {
+        if (!e.isop)
+        {
 			nums.push(e.num);
 		}
-		else {
+        else
+        {
 			double b = nums.top();
 			nums.pop();
 			double a = nums.top();
@@ -259,17 +258,23 @@ double getValue(std::vector<Node> back) {
 			switch (e.op)
 			{
 			case '+':
-				res = a + b; break;
+                res = a + b;
+                break;
 			case '-':
-				res = a - b; break;
+                res = a - b;
+                break;
 			case '*':
-				res = a * b; break;
+                res = a * b;
+                break;
 			case '/':
-				res = a / b; break;
+                res = a / b;
+                break;
 			case '^':
-				res = pow(a, b); break;
+                res = pow(a, b);
+                break;
 			case '%':
-				res = int(a) % int(b); break;
+                res = int(a) % int(b);
+                break;
 			default:
 				break;
 			}
@@ -279,16 +284,12 @@ double getValue(std::vector<Node> back) {
 	return nums.top();
 }
 
-
-double calculate(std::string expression) {
+double calculate(std::string expression)
+{
 	auto back = midToBack(expression);
 	double res = getValue(back);
     return res;
 }
-
-
-
-
 
 /*
 Handle with a line of ITEA code into tokens.
@@ -404,11 +405,11 @@ std::vector<std::string> handle_one_line(std::string newline) {
     std::vector<std::string> tokens_of_the_line = split(newline, " ");
     // the answer
     std::vector<std::string> answer;
-    if (tokens_of_the_line.size()==0) {
+    if (tokens_of_the_line.size() == 0) {
         return {};
     }
     std::string operation = tokens_of_the_line[0];
-    if(isin(operation, KEY_WORDS)) {
+    if (isin(operation, KEY_WORDS)) {
         // this means that this line of code is used to define a function or a class // 此行为定义函数或类
         // either to import something // 或者import
         // TODO
@@ -418,116 +419,118 @@ std::vector<std::string> handle_one_line(std::string newline) {
         // or execute a function // 或者执行一个函数
         std::string end_of_line;
         int length_of_line = newline.length();
-        end_of_line.push_back(newline[length_of_line-1]);
-        if (end_of_line==SP) {
-            // 这是一行将运算结果赋值的
-            // 先验证是否有=号
-            if(isin('=', newline)) {
-                // 默认为变量操作
-                // 如果第一个=左边有()那就是运行函数( 比如run(a=3) ),
-                // 没有的话那就是赋值变量
-                bool is_evaluate = true;
-                short num_left_s = 0;
-                short met=0; // 是否遇到了等号, 0为=无，1为=，2为==
-                // 先判断是变量赋值or纯执行函数
-                for(int index = 0; index<newline.size(); index++) {
-                    char i = newline[index];
-                    if(i=='=') {
-                        if(num_left_s==0) {
-                            // 没遇到左括号
-                            if(newline[index+1]!='=') {
-                                met = 1;
+        end_of_line.push_back(newline[length_of_line - 1]);
+        try {
+            if (get_fiffle_op(end_of_line) == SP) {
+                // 这是一行将运算结果赋值的
+                // 先验证是否有=号
+                if (isin('=', newline)) {
+                    // 默认为变量操作
+                    // 如果第一个=左边有()那就是运行函数( 比如run(a=3) ),
+                    // 没有的话那就是赋值变量
+                    bool is_evaluate = true;
+                    short num_left_s = 0;
+                    short met = 0; // 是否遇到了等号, 0为=无，1为=，2为==
+                    // 先判断是变量赋值or纯执行函数
+                    for (int index = 0; index < newline.size(); index++) {
+                        char i = newline[index];
+                        if (i == '=') {
+                            if (num_left_s == 0) {
+                                // 没遇到左括号
+                                if (newline[index + 1] != '=') {
+                                    met = 1;
+                                } else {
+                                    met = 2;
+                                }
+                                break;
                             } else {
-                                met = 2;
+                                is_evaluate = false;
+                                break;
                             }
-                            break;
-                        } else {
-                            is_evaluate = false;
-                            break;
                         }
+                        if (i == '(') {
+                            num_left_s++;
+                        }
+                        // if(i=='=') {
+                        //     if(met){
+                        //         throw SyntaxError("Too many equators '=' found.");
+                        //         continue;
+                        //     }
+                        //     met=true;
+                        //     continue;
+                        // }
+                        // if(!met) {
+                        //     var_name.push_back(i);
+                        // } else {
+                        //     opt_str.push_back(i);
+                        //     // 判断是否数字
+                        //     // std::cout << i << " ";
+                        //     if(!isin(i, NUMBERS) && !isin(i, CALCULATORS)) {
+                        //         is_only_num = false;
+                        //     }
+                        // }
                     }
-                    if(i=='(') {num_left_s++;}        
-                    // if(i=='=') {
-                    //     if(met){
-                    //         throw SyntaxError("Too many equators '=' found.");
-                    //         continue;
-                    //     }
-                    //     met=true;
-                    //     continue;
-                    // }
-                    // if(!met) {
-                    //     var_name.push_back(i);
-                    // } else {
-                    //     opt_str.push_back(i);
-                    //     // 判断是否数字
-                    //     // std::cout << i << " ";
-                    //     if(!isin(i, NUMBERS) && !isin(i, CALCULATORS)) {
-                    //         is_only_num = false;
-                    //     }
-                    // }
-                }
-                if(is_evaluate) {
-                    std::string var_name = "";
-                    std::string opt_str = "";
-                    bool is_only_num = true;
-                    for(int index=0; index<newline.size()-1; index++) {
-                        char i = newline[i];
-                        if(i=='=') {
-                            if(met){
-                                throw SyntaxError("Too many equators '=' found.");
+                    if (is_evaluate) {
+                        std::string var_name = "";
+                        std::string opt_str = "";
+                        bool is_only_num = true;
+                        for (int index = 0; index < newline.size() - 1; index++) {
+                            char i = newline[i];
+                            if (i == '=') {
+                                if (met) {
+                                    throw SyntaxError("Too many equators '=' found.");
+                                    continue;
+                                }
+                                met = true;
                                 continue;
                             }
-                            met=true;
-                            continue;
-                        }
-                        if(!met) {
-                            var_name.push_back(i);
-                        } else {
-                            opt_str.push_back(i);
-                            // 判断是否数字
-                            // std::cout << i << " ";
-                            if(!isin(i, NUMBERS) && !isin(i, CALCULATORS)) {
-                                is_only_num = false;
+                            if (!met) {
+                                var_name.push_back(i);
+                            } else {
+                                opt_str.push_back(i);
+                                // 判断是否数字
+                                // std::cout << i << " ";
+                                if (!isin(i, NUMBERS) && !isin(i, CALCULATORS)) {
+                                    is_only_num = false;
+                                }
                             }
                         }
-                    }
-                    char legality = islegal(var_name);
-                    if(legality!=' ') {
-                        std::string error_mes = "Ilegal var name with '";
-                        error_mes.push_back(legality);
-                        throw SyntaxError(error_mes+"'.");
-                    }
-                    // TEST
-                    // std::cout << is_only_num << std::endl;
-                    // 优化纯静态数字
-                    if(is_only_num) {
-                        double static_answer = calculate(opt_str);
-                        std::stringstream answer_string_ss;
-                        std::string answer_string;
-                        answer_string_ss << std::setprecision(_FLOAT_DIGITS) << static_answer;
-                        answer_string = answer_string_ss.str();
-                        answer = {"set", var_name, answer_string};
+                        char legality = islegal(var_name);
+                        if (legality != ' ') {
+                            std::string error_mes = "Ilegal var name with '";
+                            error_mes.push_back(legality);
+                            throw SyntaxError(error_mes + "'.");
+                        }
+                        // TEST
+                        // std::cout << is_only_num << std::endl;
+                        // 优化纯静态数字
+                        if (is_only_num) {
+                            double static_answer = calculate(opt_str);
+                            std::stringstream answer_string_ss;
+                            std::string answer_string;
+                            answer_string_ss << std::setprecision(_FLOAT_DIGITS) << static_answer;
+                            answer_string = answer_string_ss.str();
+                            answer = {"set", var_name, answer_string};
+                        } else {
+                            answer = {"set", var_name, opt_str};
+                        }
                     } else {
-                        answer = {"set", var_name, opt_str};
+                        // 处理函数
                     }
                 } else {
-                    // 处理函数
+                    throw SyntaxError("Excepting equator '=' but not found.");
                 }
-
-                
-
-            } else {
-                throw SyntaxError("Excepting equator '=' but not found.");
+            } // TODO else if () {
+            else {
+                throw SyntaxError("Excepting seperator ';' but not found.");
             }
-        } //TODO else if () {
-
-        else {
+        }
+        catch (std::out_of_range _) {
             throw SyntaxError("Excepting seperator ';' but not found.");
         }
-        return answer;
     }
+    return answer;
 }
-
 int main() {
     auto a = std::chrono::steady_clock::now();
     try {
@@ -542,4 +545,5 @@ int main() {
 
     auto b = std::chrono::steady_clock::now();
     std::cout << std::chrono::duration<double, std::micro>(b-a).count();
+    return 0;
 }
