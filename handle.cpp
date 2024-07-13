@@ -531,19 +531,19 @@ std::vector<std::string> handle_one_line(std::string newline) {
     }
     return answer;
 }
-int main() {
-    auto a = std::chrono::steady_clock::now();
-    try {
-        std::string code = "a=4+5*60;";
-        std::vector<std::string> tokens = handle_one_line(code);
-        for(std::string token : tokens) {
-            std::cout<< token<< ", " ;
-        }
-    } catch (std::exception& e) {
-        std::cout << e.what() << std::endl;
-    }
+// int main() {
+//     auto a = std::chrono::steady_clock::now();
+//     try {
+//         std::string code = "a=4+5*60;";
+//         std::vector<std::string> tokens = handle_one_line(code);
+//         for(std::string token : tokens) {
+//             std::cout<< token<< ", " ;
+//         }
+//     } catch (std::exception& e) {
+//         std::cout << e.what() << std::endl;
+//     }
 
-    auto b = std::chrono::steady_clock::now();
-    std::cout << std::chrono::duration<double, std::micro>(b-a).count();
-    return 0;
-}
+//     auto b = std::chrono::steady_clock::now();
+//     std::cout << std::chrono::duration<double, std::micro>(b-a).count();
+//     return 0;
+// }

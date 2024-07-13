@@ -10,6 +10,9 @@ int main(int argc, char* argv[]) {
     }
     if(args.size()==0) {
         // TODO: 命令行模式
+        // ONLY TEST
+        std::cout << "not supported yet." << std::endl;
+        return 0;
     }
     std::string cmd = args[0];
     if(cmd == "-h" or cmd =="--help") {
