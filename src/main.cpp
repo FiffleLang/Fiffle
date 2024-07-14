@@ -1,6 +1,6 @@
 #include <iostream>
-#include "handled.h"
-#include "helpd.h"
+#include "../include/basicd.h"
+#include "../include/helpd.h"
 
 int main(int argc, char* argv[]) {
     std::vector<std::string> args;
@@ -19,6 +19,9 @@ int main(int argc, char* argv[]) {
         output = get_help();
     } else if (cmd == "-v" or cmd == "--version") {
         output = get_version();
+    } else if (cmd == "-c") {
+        // compile
+        
     }
     else {
         std::cerr << unknown_cmd() << std::endl;

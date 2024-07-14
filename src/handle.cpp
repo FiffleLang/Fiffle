@@ -1,5 +1,5 @@
-#include "handle.h"
-#include "imath.h"
+#include "../include/handle.h"
+#include "../include/imath.h"
 
 class SyntaxError
 {

@@ -1,7 +1,7 @@
-#include "helpd.h"
+#include "../include/helpd.h"
 
-//! 下面的include发行时删除
-// #include "_release.h"
+//! 下面的include发行时删除，制作release时需要include相关宏
+// #include "../include/_release.h"
 
 const std::string VERSION = "0.1beta";
 
@@ -11,7 +11,6 @@ usage: fiffle.exe [option] [file] [-i output_file]
 Options:
     -c file : compile the file and exit, don't execute it.
     -t file : try to compile the file and exit, print if there's syntax error and don't output file.fic.
-    -g file : copy files-compiled imported in file.
     -v --version
             : output the current fiffle version and exit.
     -h --help
@@ -31,7 +30,6 @@ usage: fiffle [option] [file] [-i output_file]
 Options:
     -c file : compile the file and exit, don't execute it.
     -t file : try to compile the file and exit, print if there's syntax error and don't output file.fic.
-    -g file : copy files-compiled imported in file.
     -v --version
             : output the current fiffle version and exit.
     -h --help
