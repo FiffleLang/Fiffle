@@ -304,19 +304,26 @@ Params:
     *xxx 表示函数引用
     &xxx 表示变量引用
     @xxx 表示类对象属性引用
+    ?xxx 表示判断bool引用
 平台码关键字：(带?的是bool)
     set 设置变量的值，格式为                        set <name> <value>
     run 运行函数，格式为                            run <function> <args>
     def 定义外部函数，格式为                        def <function> <args> <?args> <?kwargs> <args_list>
     ret 返回变量，格式为                            ret <name>
-    end 退出函数(类内外都是end)定义，格式为                        end <function>
+    end 退出函数(类内外都是end)定义，格式为          end <function>
     cls 定义类，格式为                              cls <class> <basic_name>
     init 类初始化函数，必须在类中定义，格式为        init <args>
     cset 设置self属性，必须在类中定义，格式为        cset <name> <value>
     cdef 类函数，必须在类中定义，格式为              cdef <function> <args> <?args> <?kwargs> <args_list> <?self>
+    cend 结束类定义，格式为                         cend <name>
     loop 循环跳转点，格式为                         loop <name>
+    exit 退出循环段，格式为                         exit <name>
     jmp 跳到循环转跳点，格式为                      jmp <name>
     del 删除变量                                    del <name>
+    if 条件判断，格式为                             if <condition>
+    else 同上(需要展开elif)
+    endif 结束条件分支
+    print 打印内容                                 print <value>
 
 以下是预处理的结果：
 1、
@@ -379,13 +386,48 @@ Params:
     1、判断变量
         比如 
         if (not a) {
-            doSome();
+            if (b) {
+                dosome1();
+            } elif (c) {
+                dosome2();
+            }
+        } else {
+            dosome3();
         }
+        转化为
+        if not &a
+            if &b
+                run *dosome1 [[], {}]
+            else
+                if &c
+                    run *dosome2 [[], {}]
+                endif
+            endif
+        else
+            run *dosome3 [[], {}]
+        endif
+
+    2、判断bool
+        比如
+        if (a>5) {
+            print(5);
+        } else {
+            print(a);
+        }
+        转化为
+        if ?&a>5
+            print 5
+        else
+            print &a
+        endif
+
+
+
 
 
 7、循环       
     1、for循环
-        1、in遍历
+        1、in range
             比如
             ```
             for (i in range(1,5)) {
@@ -395,7 +437,66 @@ Params:
             }
             ```
             转化为
-            loop l65196047842903732761 # 6519604784290373276 是整个文件的哈希，后面的1表示第几个loop节点
+            loop l65196047842903732761  # 6519604784290373276 是整个文件的哈希，后面的1表示第几个loop节点
+                set j 1                                     
+                jmp l65196047842903732762                   
+
+                set i &i+1                                  #  倒数第四行是for遍历对象操作
+                if ?&i<5                                    #  倒数第三行判断是否继续for循环
+                    jmp l65196047842903732761               #  倒数第二行jmp继续循环
+                endif
+            exit l65196047842903732761
+
+            loop l65196047842903732762
+                print &i+&j
+                
+                set j &j+1
+                if ?&j<6
+                    jmp ll65196047842903732761
+                endif
+            exit l65196047842903732762
+
+            set i 1
+            jmp l65196047842903732761
+
+        2、in array
+            比如
+            ```
+            for (i in [1,3,5]) {
+                print(i);
+            }
+            ```
+            转化为
+            ```
+            loop l65196047842903732761
+                set i &a65196047842903732761[i65196047842903732761]
+                print i
+
+                set i65196047842903732761 &i65196047842903732761+1
+                if ?&i65196047842903732761 < &g65196047842903732761  #  这里为了注释能让人看懂加了空格，实际是不加的
+                    jmp l65196047842903732761
+                endif
+            exit l65196047842903732761
+
+            set i65196047842903732761 1
+            set a65196047842903732761 [1,3,5]
+            set g65196047842903732761 a65196047842903732761@length  #  用@取属性
+            jmp l65196047842903732761
+
+    2、while循环
+        比如
+        ```
+        while i<3:
+            i = i^2;
+        ```
+        转化为
+        loop l65196047842903732761
+            set i &i^2
+
+            if ?&i<3
+                jmp l65196047842903732761
+            endif
+        exit l65196047842903732761
 
 
 
