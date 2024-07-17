@@ -26,6 +26,20 @@ public:
   }
 };
 
+class SyntaxError
+{
+    public:
+    SyntaxError(const std::string &error_msg) : _error_msg(error_msg) {}
+    virtual std::string what() const
+    {
+        std::cout << _error_msg <<std::endl;
+        return "SyntaxError: " + _error_msg;
+    }
+
+    protected:
+        std::string _error_msg;
+};
+
 std::vector<std::string> split(std::string string, std::string delimeter = " ", int start = 0, int end = -1);
 std::vector<std::string> split_and_keep(std::string string, char delimeter, int start = 0, int end = -1);
 
@@ -55,7 +69,7 @@ enum FiffleOpeator {
 /*
 Obtain the enum by using the token of the char type
 */
-std::map<std::string, FiffleOpeator> _get_fiffle_op = {
+const std::map<std::string, FiffleOpeator> _get_fiffle_op = {
     {"!", FiffleOpeator::S1},         {"#", FiffleOpeator::S2},         {"$", FiffleOpeator::S3},      {"%", FiffleOpeator::S4},
     {"^", FiffleOpeator::S5},         {"&", FiffleOpeator::S6},         {"*", FiffleOpeator::S7},      {"(", FiffleOpeator::LEFT_S},
     {")", FiffleOpeator::RIGHT_S},    {"-", FiffleOpeator::MINUS},      {"_", FiffleOpeator::UNDER},   {"+", FiffleOpeator::ADDIT},
@@ -67,7 +81,7 @@ std::map<std::string, FiffleOpeator> _get_fiffle_op = {
     {">=", FiffleOpeator::RGT_EQUAL}, {"!=", FiffleOpeator::NOT_EQUAL}, {"==", FiffleOpeator::IS_EUQAL}
 };
 
-#define get_fiffle_op(s) _get_fiffle_op.at(s)
+
 
 const std::vector<FiffleOpeator> SPECIAL_ASCII = {
     FiffleOpeator::S1, FiffleOpeator::S2, FiffleOpeator::S3, FiffleOpeator::S4,
@@ -81,6 +95,7 @@ const std::string CALCULATORS = "+-/*()";
 const std::vector<FiffleOpeator> ILEGAL_CHARS = {
     S1, S2, S3, S4, S5, S6, S7
 };
+const std::string NONE = " \r\t\n";
 
 /*
 和python一样，int等类型都不是关键字，是内置类型

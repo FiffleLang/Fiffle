@@ -1,19 +1,8 @@
 #include "../include/handle.h"
 #include "../include/imath.h"
+#include "../include/_pre_handle.h"
 
-class SyntaxError
-{
-    public:
-    SyntaxError(const std::string &error_msg) : _error_msg(error_msg) {}
-    virtual std::string what() const
-    {
-        return "SyntaxError: " + _error_msg;
-    }
-
-    protected:
-        std::string _error_msg;
-};
-
+#define get_fiffle_op(s) _get_fiffle_op.at(s)
 /*
 Split string into vector<string> using delimiter.
 
@@ -499,7 +488,7 @@ Params:
         exit l65196047842903732761
 
 
-
+! 此函数是解析代码的主函数
 
 */
 std::vector<std::string> handle_one_line(std::string newline) {
@@ -523,103 +512,19 @@ std::vector<std::string> handle_one_line(std::string newline) {
         end_of_line.push_back(newline[length_of_line - 1]);
         try {
             if (get_fiffle_op(end_of_line) == SP) {
-                // 这是一行将运算结果赋值的
-                // 先验证是否有=号
-                if (isin('=', newline)) {
-                    // 默认为变量操作
-                    // 如果第一个=左边有()那就是运行函数( 比如run(a=3) ),
-                    // 没有的话那就是赋值变量
-                    bool is_evaluate = true;
-                    short num_left_s = 0;
-                    short met = 0; // 是否遇到了等号, 0为=无，1为=，2为==
-                    // 先判断是变量赋值or纯执行函数
-                    for (int index = 0; index < newline.size(); index++) {
-                        char i = newline[index];
-                        if (i == '=') {
-                            if (num_left_s == 0) {
-                                // 没遇到左括号
-                                if (newline[index + 1] != '=') {
-                                    met = 1;
-                                } else {
-                                    met = 2;
-                                }
-                                break;
-                            } else {
-                                is_evaluate = false;
-                                break;
-                            }
-                        }
-                        if (i == '(') {
-                            num_left_s++;
-                        }
-                        // if(i=='=') {
-                        //     if(met){
-                        //         throw SyntaxError("Too many equators '=' found.");
-                        //         continue;
-                        //     }
-                        //     met=true;
-                        //     continue;
-                        // }
-                        // if(!met) {
-                        //     var_name.push_back(i);
-                        // } else {
-                        //     opt_str.push_back(i);
-                        //     // 判断是否数字
-                        //     // std::cout << i << " ";
-                        //     if(!isin(i, NUMBERS) && !isin(i, CALCULATORS)) {
-                        //         is_only_num = false;
-                        //     }
-                        // }
+                // 判断单行代码类型
+                // 只能是变量赋值or执行函数
+                // 所以依次获取char，遇到等号或左括号结束
+                for(int index=0; index<newline.size()-1; index++) {
+                    char current = newline[index];
+                    // 跳过空格
+                    if(isin(current, NONE)) {
+                        continue;
                     }
-                    if (is_evaluate) {
-                        std::string var_name = "";
-                        std::string opt_str = "";
-                        bool is_only_num = true;
-                        for (int index = 0; index < newline.size() - 1; index++) {
-                            char i = newline[i];
-                            if (i == '=') {
-                                if (met) {
-                                    throw SyntaxError("Too many equators '=' found.");
-                                    continue;
-                                }
-                                met = true;
-                                continue;
-                            }
-                            if (!met) {
-                                var_name.push_back(i);
-                            } else {
-                                opt_str.push_back(i);
-                                // 判断是否数字
-                                // std::cout << i << " ";
-                                if (!isin(i, NUMBERS) && !isin(i, CALCULATORS)) {
-                                    is_only_num = false;
-                                }
-                            }
-                        }
-                        char legality = islegal(var_name);
-                        if (legality != ' ') {
-                            std::string error_mes = "Ilegal var name with '";
-                            error_mes.push_back(legality);
-                            throw SyntaxError(error_mes + "'.");
-                        }
-                        // TEST
-                        // std::cout << is_only_num << std::endl;
-                        // 优化纯静态数字
-                        if (is_only_num) {
-                            double static_answer = calculate(opt_str);
-                            std::stringstream answer_string_ss;
-                            std::string answer_string;
-                            answer_string_ss << std::setprecision(_FLOAT_DIGITS) << static_answer;
-                            answer_string = answer_string_ss.str();
-                            answer = {"set", var_name, answer_string};
-                        } else {
-                            answer = {"set", var_name, opt_str};
-                        }
-                    } else {
-                        // 处理函数
+                    if(current=='=') {
+                        answer = _compile_evaluate(newline);
                     }
-                } else {
-                    throw SyntaxError("Excepting equator '=' but not found.");
+
                 }
             } // TODO else if () {
             else {

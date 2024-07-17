@@ -21,7 +21,7 @@ int main(int argc, char* argv[]) {
         output = get_version();
     } else if (cmd == "-c") {
         // compile
-        
+        // 
     }
     else {
         std::cerr << unknown_cmd() << std::endl;
