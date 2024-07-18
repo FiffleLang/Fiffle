@@ -131,7 +131,7 @@ char islegal(std::string name)
             return i;
         }
     }
-    return ' ';
+    return EMPTY;
 }
 
 void print(std::string message)

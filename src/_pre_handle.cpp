@@ -8,13 +8,16 @@ std::vector<std::string> _compile_evaluate(std::string newline) {
     bool is_only_num = true;
     bool met=false;
     for (int index = 0; index < newline.size() - 1; index++) {
-        char i = newline[i];
-        if(i=='=') {
+        char i = newline[index];
+        // std::cout << met << "," << i << std::endl;
+        if(i==EQUAL_) {
             met=true;
+            continue;
         }
         if (!met) {
             var_name.push_back(i);
         } else {
+            // std::cout << i << std::endl;
             opt_str.push_back(i);
             // 判断是否数字
             // std::cout << i << " ";
@@ -24,7 +27,7 @@ std::vector<std::string> _compile_evaluate(std::string newline) {
         }
     }
     char legality = islegal(var_name);
-    if (legality != ' ') {
+    if (legality != EMPTY) {
         std::string error_mes = "Ilegal var name with '";
         error_mes.push_back(legality);
         throw SyntaxError(error_mes + "'.");
@@ -32,6 +35,7 @@ std::vector<std::string> _compile_evaluate(std::string newline) {
     // TEST
     // std::cout << is_only_num << std::endl;
     // 优化纯静态数字
+
     if (is_only_num) {
         double static_answer = calculate(opt_str);
         std::stringstream answer_string_ss;
@@ -60,7 +64,7 @@ std::vector<std::string> _compile_execute(std::string newline) {
             } else {
                 if(cur=='(') {
                     if(tmp!="") {
-                        _executor = tmp;
+                        _executor = "*" + tmp;
                         args.push_back(_executor);
                         tmp = "";
                     } else {
@@ -81,7 +85,6 @@ std::vector<std::string> _compile_execute(std::string newline) {
                 } else {
                     tmp.push_back(cur);
                 }
-                
             } else if (cur==')') {
                 right++;
                 if(left==right) {

@@ -3,7 +3,7 @@
 using namespace std;
 int main() {
     try {
-        vector<string> t = _compile_evaluate("a=4+5;");
+        vector<string> t = _compile_execute("test(114, a=514);");
         for(string s:t) {
             cout<<s<<endl;
         }

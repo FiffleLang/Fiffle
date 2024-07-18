@@ -92,11 +92,12 @@ const std::vector<FiffleOpeator> SPECIAL_ASCII = {
 
 const std::string NUMBERS = "0123456789";
 const std::string CALCULATORS = "+-/*()";
-const std::vector<FiffleOpeator> ILEGAL_CHARS = {
-    S1, S2, S3, S4, S5, S6, S7
+const std::vector<char> ILEGAL_CHARS = {
+    '!', '#', '$', '%', '^', '&', '*', '(', ')', '-', '+'
 };
 const std::string NONE = " \r\t\n";
-
+const char EMPTY = ' ';
+const char EQUAL_ = '=';
 /*
 和python一样，int等类型都不是关键字，是内置类型
 Key Words:
