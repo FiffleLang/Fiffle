@@ -22,6 +22,9 @@ int main(int argc, char* argv[]) {
     } else if (cmd == "-c") {
         // compile
         // 
+        std::string filename = args[1];
+        // if the file exists
+            // handle_all(1, filename);
     }
     else {
         std::cerr << unknown_cmd() << std::endl;

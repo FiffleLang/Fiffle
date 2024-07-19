@@ -54,7 +54,7 @@ std::vector<std::string> _compile_execute(std::string newline) {
     // functioname(arg1, arg2, test1(xxx), name=arg3, name2=test2(xxx, t=yyy))
     std::string tmp="";
     std::string _executor="";
-    std::vector<std::string> args;
+    std::vector<std::string> args={"run"};
     short left=0; short right=0;
     for(int index=0; index<newline.size()-1; index++) {
         char cur = newline[index];

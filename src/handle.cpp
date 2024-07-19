@@ -523,6 +523,8 @@ std::vector<std::string> handle_one_line(std::string newline) {
                     }
                     if(current=='=') {
                         answer = _compile_evaluate(newline);
+                    } else if (current == '(') {
+                        answer = _compile_execute(newline);
                     }
 
                 }
